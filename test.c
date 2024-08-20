@@ -15,6 +15,8 @@ void sig_int(int code)
         write(STDERR_FILENO, "\n", 1);
     }
     g_sig.sigint = 1;
+    g_sig.exit_status = 1;
+    // g_sig.exit_status = 130;
 }
 
 void sig_quit(int code)
@@ -537,6 +539,15 @@ int main_shell_loop(t_env *env)
             break;
         //     return (exit_status);
         }
+
+        if (g_sig.sigint)//for ctrl-c than echo $?
+        {
+            //free(input);
+            exit_status = g_sig.exit_status;
+            g_sig.sigint = 0;  // Reset the flag
+           // continue;
+        }
+
         // if (g_sig.sigint)
         // {
         //     // free(input);
@@ -561,14 +572,21 @@ int main_shell_loop(t_env *env)
         else if (parse_result == -1)
         {
             free_tokens(tokens);
-            g_sig.exit_status = 2;
-            continue;
+            g_sig.exit_status = 1;
+            // continue;
+        }
+        else if (parse_result == 258)
+        {
+            free_tokens(tokens);
+            g_sig.exit_status = 258;
+            // continue;
         }
 
         exit_status = g_sig.exit_status;
     }
     return (exit_status);
 }
+
 
 
 void free_command(t_arg *cmd)

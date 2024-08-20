@@ -50,7 +50,8 @@ int is_builtin(const char *cmd)
     const char *builtins[] = {
         "echo", "cd", "pwd", "export", "unset", "env", "exit", NULL
     };
-
+    if (cmd == NULL)
+        return (0);
     for (int i = 0; builtins[i]; i++)
     {
         if (ft_strcmp(cmd, builtins[i]) == 0)
@@ -65,7 +66,9 @@ int count_heredocs(char **red)
 {
     int count = 0;
     int i = 0;
-    while (red && red[i])
+    if (!red || !(*red))
+        return (0);
+    while (red[i] != NULL)
     {
         if (ft_strcmp(red[i], "<<") == 0)
             count++;

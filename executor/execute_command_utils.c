@@ -92,6 +92,8 @@ int fork_and_execute(fork_execute_params *params) {
         setup_child_process(&setup_params);
         if (apply_redirections(params->cmd->red) == -1)
             exit(1);
+        if (params->cmd->arg == NULL)
+            exit (0);
         if (is_builtin(params->cmd->arg[0]))
             exit(execute_builtin(params->cmd, params->env, params->exit_status));
         else

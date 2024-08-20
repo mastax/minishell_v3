@@ -107,18 +107,21 @@ int		ft_check_qoutes(char	*line);
 int	ft_skipe_qoute(char	*s, int i);
 int	ft_name_len(char *var, int i);
 int ft_have_sp_tb(char *s);
-int ft_handl_spichel_cond(t_token **token, t_token *now, t_token *next_token, char *content);
+int	ft_handl_spichel_cond(t_token **token, t_token *now, t_token *next_token,
+char *content, t_type *prv_type);
 int	get_token(t_token **token, char	*s, int z);
 void free_tokens(t_token *tokens);
 int		ft_check_error(t_token *token);
 void	ft_putstr_fd(char *str, int fd);
 char	*ft_remove_quotes(char *s);
 // int		expanden(t_token **token, char **env);
-int	expanding(t_token **token, t_env *env, int exit_status);
+int	expanding(t_token **token, t_env *env, int exit_status, t_type prv_type);
 // int	get_token(t_token **token, char	*s);
 int		ft_skipe_spaces(char *s, int index);
 char    *ft_remove_char(char *s, unsigned int index);
 void	ft_lstadd_back(t_token **lst, t_token *new);
+int	check_induble(char *s, int i);
+
 
 // t_arg *parsing(char *line, char **env);
 int	parsing(char *line, t_token	**token, t_env *env, int exit_status);
